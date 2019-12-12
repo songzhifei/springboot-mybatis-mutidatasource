@@ -39,9 +39,11 @@ public class SolrTest {
              * SolrQuery 继承于 org.apache.solr.common.params.SolrParams*/
             SolrQuery query = new SolrQuery();
 
-            query.setQuery("PASS_TIME:[2018-05-20 TO 2018-05-21]");
+            query.set("fq","PASS_TIME:[2018-05-20 TO 2018-05-21]");
 
-            query.setQuery("PLATE_NO:冀AW122Y");
+            //query.set("q","PLATE_NO:冀AW122Y");
+
+            query.set("q","*:*");
 
             query.setStart(0);
 
@@ -56,23 +58,23 @@ public class SolrTest {
             ArrayList<String> ids = new ArrayList<String>();
 
             for(SolrDocument solrDocument : solrDocumentList){
-                String plate_no = solrDocument.getOrDefault("PLATE_NO","").toString();
-                String pass_time = solrDocument.getOrDefault("PASS_TIME", "").toString();
-                int crossing_id = (int) solrDocument.getOrDefault("CROSSING_ID", 0);
+//                String plate_no = solrDocument.getOrDefault("PLATE_NO","").toString();
+//                String pass_time = solrDocument.getOrDefault("PASS_TIME", "").toString();
+//                int crossing_id = (int) solrDocument.getOrDefault("CROSSING_ID", 0);
                 String id = (String) solrDocument.getOrDefault("id", "");
 
                 ids.add(id);
 
-                System.out.println("id:"+id+",plate_no:"+plate_no+",pass_time:"+pass_time+",crossing_id"+crossing_id);
+                //System.out.println("id:"+id+",plate_no:"+plate_no+",pass_time:"+pass_time+",crossing_id"+crossing_id);
 
             }
 
-            List<TrafficVehiclePass> list = hbaseService.getListRowkeyData("TRAFFIC_VEHICLE_PASS", ids, "cf1", "");
+//            List<TrafficVehiclePass> list = hbaseService.getListRowkeyData("TRAFFIC_VEHICLE_PASS", ids, "cf1", "");
 
-            //List<TrafficVehiclePass> list = trafficVehiclePassMapper.getListByID(ids);
-            for (TrafficVehiclePass trafficVehiclePass:list){
-                System.out.println(trafficVehiclePass.getPLATE_NO());
-            }
+            List<TrafficVehiclePass> list = trafficVehiclePassMapper.getListByID(ids);
+//            for (TrafficVehiclePass trafficVehiclePass:list){
+//                System.out.println(trafficVehiclePass.getPLATE_NO());
+//            }
 
             System.out.println(list.size());
 

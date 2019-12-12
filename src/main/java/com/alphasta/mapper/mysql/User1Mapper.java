@@ -3,10 +3,11 @@ package com.alphasta.mapper.mysql;
 import com.alphasta.enums.UserSexEnum;
 import com.alphasta.model.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+@Repository
 public interface User1Mapper {
 
 	@Select("SELECT * FROM users")
